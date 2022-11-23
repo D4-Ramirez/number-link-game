@@ -2,16 +2,17 @@
 @author: Jose Lopez Garcia, David Ramirez Monroy
 """
 
+import queue
+
 from .matrix import Matrix
 from .point import Point
-from .line import Line
 from ..utils.utils import random_color
 
 
 class Game:
     def __init__(self, file):
         self.file = file
-        self.lines: list[Line] = []
+        self.completed_lines = []
         self.board = self.generate_board()
 
     def generate_board(self) -> list[list[Point]]:
