@@ -14,6 +14,7 @@ def main():
     parent = Tk()
     
     app = Application(parent)
+    
     app.create_widgets(game_system)
 
     parent.mainloop()

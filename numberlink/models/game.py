@@ -4,18 +4,19 @@
 
 from .matrix import Matrix
 from .point import Point
+from .line import Line
 from ..utils.utils import random_color
 
 
 class Game:
     def __init__(self, file):
         self.file = file
+        self.lines: list[Line] = []
         self.board = self.generate_board()
 
-    def generate_board(self):
+    def generate_board(self) -> list[list[Point]]:
         memory = []
-        try:
-            file = open(self.file)
+        with open(self.file) as file:
             lines = file.readlines()
             for line in lines:
                 if '\n' in line:
@@ -29,13 +30,14 @@ class Game:
                         in_tuple = [
                             tup for tup in memory if tup[0] == point[2]]
                         if in_tuple:
-                            matrix.change_value(
+                            matrix.update_value(
                                 Point(point[0], point[1], point[2], in_tuple[0][1]))
                         else:
                             color = random_color()
                             memory.append((point[2], color))
-                            matrix.change_value(
+                            matrix.update_value(
                                 Point(point[0], point[1], point[2], color))
             return matrix
-        except FileNotFoundError:
-            print(f'File { self.file } not found')
+    
+    def __str__(self) -> str:
+        return f'file: {self.file}'
